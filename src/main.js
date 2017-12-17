@@ -1,8 +1,9 @@
+
 /*
   ..-  --.- ..- -.... -..-- .-..-. -.-..---.-.-....--.-- -....-.... -..-- .-.-..-.-.... .- .--
 
   B A S I L . J S
-  Bringing the spirit of the Processing visualization language to Adobe InDesign.
+  Bringing the spirit of the Processing visualization language to Adobe Indesign.
 
   License        - MIT
 
@@ -15,8 +16,6 @@
                  - be:screen GmbH http://bescreen.de
                  - Stefan Landsbek http://47nord.de
                  - Ken Frederick http://kennethfrederick.de/
-                 - Timo Rychert http://timorychert.de/
-                 - Fabian Morón Zirfas http://fabianmoronzirfas.me/
 
   Web Site       - http://basiljs.ch
   Github Repo.   - https://github.com/basiljs/basil.js
@@ -33,15 +32,18 @@
   from processing.js by the Processing.js team. We would have had a hard time
   to figure all of that out on our own!
 
-  The Lorem ipsum string of b.LOREM is taken from https://indieweb.org/Lorem_ipsum and
-  is available under a CC0 public domain dedication.
-
-  Supported Adobe InDesign versions: CS 5+
+  Supported Adobe Indesign versions: CS 5, CS 5.5 and CS 6
 
   .--.--.- .-.-......-....--.-- -.... -..---.-.... .-- . .---.- -... -.-..---.-. ..--.-- -.. -
 */
 
-#target "InDesign";
+/*
+    After Effects Expansion by
+    Roberto Cabezas H.
+    bbetoo@gmail.com
+*/
+
+#target "AfterEffects";
 
 (function(glob, app, undef) {
 
@@ -56,9 +58,8 @@
    * @property VERSION {String}
    * @cat Environment
    */
-  pub.VERSION = "1.1.0";
+  pub.VERSION = "1.0.10";
 
-  #include "includes/constants.js";
   #include "includes/public-vars.js";
   #include "includes/private-vars.js";
   #include "includes/global-functions.js";
@@ -76,7 +77,11 @@
   #include "includes/transformation.js";
   #include "includes/ui.js";
 
+  //AfterEffects additions to the library
+  #include "includes/after-effects-expansion.js";
+  #include "includes/after-effects-constants.js";
+  #include "includes/after-effects-utilities.js";
+  #include "includes/after-effects-data.js";
   init();
 
 })(this, app);
-

@@ -24,7 +24,7 @@ pub.delay = function (milliseconds) {
  * @return {Stories[]} Array of Stories.
  */
 pub.stories = function(doc, cb) {
-
+  
   checkNull(doc);
 
   if(arguments.length === 1 && doc instanceof Document) {
@@ -37,20 +37,30 @@ pub.stories = function(doc, cb) {
 };
 
 /**
- * If no callback function is given it returns a Collection of paragraphs in the container otherwise calls the given callback function with each paragraph of the given document, page, story or textFrame.
+ * If no callback function is given it returns a Collection of items otherwise calls the given callback function with each paragraph of the given document, story or text frame.
  *
  * @cat Document
  * @subcat Multi-Getters
  * @method paragraphs
- * @param  {Document|Page|Story|TextFrame} container The document, story, page or textFrame instance to iterate the paragraphs in
+ * @param  {Document|Story|TextFrame} item The story or text frame instance to iterate the paragraphs in
  * @param  {Function} [cb]  Optional: The callback function to call with each paragraph. When this function returns false the loop stops. Passed arguments: para, loopCount
- * @return {Paragraphs[]} Array of Paragraphs.
+ * @return {Paragraphs[]} Array of Paragraphs.   
  */
-pub.paragraphs = function(container, cb) {
+pub.paragraphs = function(item, cb) {
 
-  var legalContainers = "Document, Story, Page or TextFrame.";
-  return textCollection("paragraphs", legalContainers, container, cb);
+  checkNull(item);
+    
+  if(!item.hasOwnProperty('contents')) error("b.paragraphs(), Wrong object type.");
 
+  if(arguments.length === 1) {
+    return item.paragraphs;
+  } else if (cb instanceof Function) {
+    if (item instanceof Document) {
+      return forEachStoryProperty(item, 'paragraphs', cb);
+    } else {
+      return forEach(item.paragraphs, cb);
+    }
+  }
 };
 
 // /**
@@ -62,7 +72,7 @@ pub.paragraphs = function(container, cb) {
 //  * param  {Document|Story|TextFrame} item The story or text frame instance to iterate the sentences in
 //  * param  {Function} cb  Optional: The callback function to call with each sentence. When this function returns false the loop stops. Passed arguments: sentence, loopCount
 //  * return {Array} An array of strings
-//  *
+//  * 
 //  */
 //  // FIXME
 // pub.sentences = function(item, cb) {
@@ -78,7 +88,7 @@ pub.paragraphs = function(container, cb) {
 //   if(arguments.length >= 1 ) {
 //     var arr;
 //     try{
-//       str = item.contents;
+//       str = item.contents;  
 //       arr = str.match( /[^\.!\?]+[\.!\?]+/g );
 //     } catch (e){
 //       error("b.sentences(), Object passed to b.sentences() does not have text or is incompatible.");
@@ -97,102 +107,101 @@ pub.paragraphs = function(container, cb) {
 // };
 
 /**
- * If no callback function is given it returns a Collection of lines in the container otherwise calls the given callback function with each line of the given document, page, story, textFrame or paragraph.
+ * If no callback function is given it returns a Collection of items otherwise calls the given callback function with each line of the given document, story, text frame or paragraph.
  *
  * @cat Document
  * @subcat Multi-Getters
  * @method lines
- * @param  {Document|Page|Story|TextFrame|Paragraph} container The document, page, story, textFrame or paragraph instance to
+ * @param  {Document|Story|TextFrame|Paragraph} item The document, story, text frame or paragraph instance to
  *                                                   iterate the lines in
  * @param  {Function} [cb] Optional: The callback function to call with each line. When this function returns false the loop stops. Passed arguments: line, loopCount
  * @return {Lines[]} Array of lines.
  */
-pub.lines = function(container, cb) {
+pub.lines = function(item, cb) {
 
-  var legalContainers = "Document, Story, Page, TextFrame or Paragraph.";
-  return textCollection("lines", legalContainers, container, cb);
+  checkNull(item);
 
+  if(!item.hasOwnProperty('contents')) error("b.lines(), Wrong object type.");
+
+  if(arguments.length === 1) {
+    return item.lines;
+  } else if (cb instanceof Function) {
+    if (item instanceof Document) {
+      return forEachStoryProperty(item, 'lines', cb);
+    } else {
+      return forEach(item.lines, cb);
+    }
+  }
 };
 
 /**
- * If no callback function is given it returns a Collection of words in the container otherwise calls the given callback function with each word of the given document, page, story, textFrame, paragraph or line.
+ * If no callback function is given it returns a Collection of items otherwise calls the given callback function with each word of the given document, story, text frame, paragraph or line.
  *
  * @cat Document
  * @subcat Multi-Getters
  * @method words
- * @param  {Document|Page|Story|TextFrame|Paragraph|Line} container The document, page, story, textFrame, paragraph or line instance
+ * @param  {Document|Story|TextFrame|Paragraph|Line} item The document, story, text frame, paragraph or line instance
  *                                                        to iterate the words in
  * @param  {Function} [cb] Optional: The callback function to call with each word. When this function returns false the loop stops. Passed arguments: word, loopCount
  * @return {Words[]} Array of Words.
  */
-pub.words = function(container, cb) {
+pub.words = function(item, cb) {
 
-  var legalContainers = "Document, Story, Page, TextFrame, Paragraph or Line.";
-  return textCollection("words", legalContainers, container, cb);
+  checkNull(item);
 
+  if(!item.hasOwnProperty('contents')) error("b.words(), Wrong object type.");
+  
+  if(arguments.length === 1){
+    return item.words;
+  } else if (cb instanceof Function) {
+    if (item instanceof Document) {
+      return forEachStoryProperty(item, 'words', cb);
+    } else {
+      return forEach(item.words, cb);
+    }
+  }
 };
 
 /**
- * If no callback function is given it returns a Collection of characters in the container otherwise calls the given callback function with each character of the given document, page, story, textFrame, paragraph, line or word.
+ * If no callback function is given it returns a Collection of items otherwise calls the given callback function with each character of the given document, story, text frame, paragraph, line or word.
  *
  * @cat Document
  * @subcat Multi-Getters
  * @method characters
- * @param  {Document|Page|Story|TextFrame|Paragraph|Line|Word} container The document, page, story, textFrame, paragraph, line or word instance to
+ * @param  {Document|Story|TextFrame|Paragraph|Line|Word} item The document, story, text frame, paragraph, line or word instance to
  *                                                    iterate the characters in
  * @param  {Function} [cb] Optional: The callback function to call with each character. When this function returns false the loop stops. Passed arguments: character, loopCount
  * @return {Characters} You can use it like an array.
  */
-pub.characters = function(container, cb) {
+pub.characters = function(item, cb) {
 
-  var legalContainers = "Document, Story, Page, TextFrame, Paragraph, Line or Word.";
-  return textCollection("characters", legalContainers, container, cb);
+  checkNull(item);
 
+  if(!item.hasOwnProperty('contents')) error("b.characters(), Wrong object type.");
+
+  if(arguments.length === 1) {
+    return item.characters;
+  } else if ( cb instanceof Function) {
+    if (item instanceof Document) {
+      return forEachStoryProperty(item, 'characters', cb);
+    } else {
+      return forEach(item.characters, cb);
+    }
+  }
 };
 
-var textCollection = function(collection, legalContainers, container, cb) {
-
-  checkNull(container);
-
-  if(!(container.hasOwnProperty("contents") || container instanceof Document || container instanceof Page)) {
-    error("b." + collection + "(), wrong object type. Use: " + legalContainers);
-  }
-
-  if(cb instanceof Function) {
-    // callback function is passed
-    if (container instanceof Document || container instanceof Page) {
-      return forEachTextCollection(container, collection, cb);
-    } else {
-      return forEach(container[collection], cb);
+var forEachStoryProperty = function(doc, property, cb) {
+  var loopCount = 0;
+  pub.stories(doc, function(story) {
+    var properties = story[property];
+    for (var i = 0, len = properties.length; i < len; i++) {
+      if(cb(properties[i], loopCount++) === false) {
+        return false;
+      }
     }
-  } else {
-    // no callback function is passed
-    if(container instanceof Document) {
-      return container.stories.everyItem()[collection];
-    } else if (container instanceof Page) {
-      return container.textFrames.everyItem()[collection];
-    } else {
-      return container[collection];
-    }
-  }
-}
-
-var forEachTextCollection = function(container, collection, cb) {
-  var collection;
-  if(container instanceof Document) {
-    collection = container.stories.everyItem()[collection];
-  } else {
-    collection = container.textFrames.everyItem()[collection];
-  }
-
-  for (var i = 0; i < collection.length; i++) {
-    if(cb(collection[i], i) === false) {
-      return false;
-    }
-  }
-  return true;
+    return true;
+  });
 };
-
 
 /**
  * If no callback function is given it returns a Collection of items otherwise calls the given callback function for each of the PageItems in the given Document, Page, Layer or Group.
@@ -201,19 +210,19 @@ var forEachTextCollection = function(container, collection, cb) {
  * @subcat Multi-Getters
  * @method items
  * @param  {Document|Page|Layer|Group} container The container where the PageItems sit in
- * @param  {Function|Boolean} [cb] Optional: The callback function to call for each PageItem. When this function returns false the loop stops. Passed arguments: item, loopCount.
+ * @param  {Function|Boolean} [cb] Optional: The callback function to call for each PageItem. When this function returns false the loop stops. Passed arguments: item, loopCount. 
  * @return {PageItems[]} array or PageItems.
  */
 pub.items = function(container, cb) {
 
-  if (container instanceof Document
-    || container instanceof Page
-    || container instanceof Layer
+  if (container instanceof Document 
+    || container instanceof Page 
+    || container instanceof Layer 
     || container instanceof Group) {
 
-    if(arguments.length === 1 || cb === false) {
+    if(arguments.length === 1 || cb === false){
       return container.allPageItems;
-    } else if(cb instanceof Function) {
+    } else if(cb instanceof Function ) {
       return forEach(container.allPageItems, cb);
     }
   } else {
@@ -231,23 +240,23 @@ pub.items = function(container, cb) {
  */
 pub.clear = function(container) {
 
-  if (container instanceof Document
-    || container instanceof Page
-    || container instanceof Layer
+  if (container instanceof Document 
+    || container instanceof Page 
+    || container instanceof Layer 
     || container instanceof Group) {
 
-    return forEach(container.allPageItems, function(item, n) {
+      return forEach(container.allPageItems, function(item,n){
         // Groups have to be avoided for deletion
         // otherwise deletion process is confused
-      if(item !== null && !(item instanceof Group)) {
-        if(item.locked) error("b.clear(), some items are locked. Please unlock them first and sue then b.clear().");
-        item.remove();
-      }
-    });
+        if(item !== null && ! (item instanceof Group) ) {
+          if(item.locked) error("b.clear(), some items are locked. Please unlock them first and sue then b.clear().");
+          item.remove();
+        }
+      });
 
-  } else {
-    return false;
-  }
+    } else {
+      return false;
+    }
 };
 
 /**
@@ -264,4 +273,4 @@ pub.remove = function(obj) {
   } else {
     throw new Error("Provided object cannot be removed in b.remove().");
   }
-};
+}

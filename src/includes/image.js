@@ -2,11 +2,11 @@
 // Image
 
 /**
- * Adds an image to the document. If the image argument is given as a string the image file must be in the document's
+ * Adds an image to the document. If the image argument is given as a string the image file  must be in the document's
  * data directory which is in the same directory where the document is saved in. The image argument can also be a File
  * instance which can be placed even before the document was saved.
  * The second argument can either be the x position of the frame to create or an instance of a rectangle,
- * oval or polygon to place the image in. If an x position is given, a y position must be given, too.
+ * oval or polygon to place the image in.
  * If x and y positions are given and width and height are not given, the frame's size gets set to the original image size.
  *
  * @cat Document
@@ -24,52 +24,33 @@ pub.image = function(img, x, y, w, h) {
     frame = null,
     fitOptions = null,
     width = null,
-    height = null,
-    imgErrorMsg = "b.image(), wrong parameters. Use:\n"
-      + "b.image( {String|File}, {Rectangle|Oval|Polygon} ) or\n"
-      + "b.image( {String|File}, x, y ) or\n"
-      + "b.image( {String|File}, x, y, w, h )";
-
-  if(arguments.length < 2 || arguments.length === 4 || arguments.length > 5) error(imgErrorMsg);
-
+    height = null;
   if (x instanceof Rectangle ||
       x instanceof Oval ||
       x instanceof Polygon) {
     frame = x;
-    fitOptions = FitOptions.FILL_PROPORTIONALLY;
-  } else if (typeof x === "number" && typeof y === "number") {
+  } else {
     width = 1;
     height = 1;
     if (currImageMode === pub.CORNERS) {
-      if (typeof w === "number" && typeof h === "number") {
-        width = w - x;
-        height = h - y;
-        fitOptions = FitOptions.FILL_PROPORTIONALLY;
-      } else if (arguments.length === 3) {
-        fitOptions = FitOptions.frameToContent;
-      } else {
-        error(imgErrorMsg);
-      }
+      width = w - x;
+      height = h - y;
+      fitOptions = FitOptions.FILL_PROPORTIONALLY;
     } else {
-      if (typeof w === "number" && typeof h === "number") {
-        if (w <= 0 || h <= 0) error("b.image, invalid parameters. When using b.image(img, x, y, w, h) with the default imageMode b.CORNER, parameters w and h need to be greater than 0.");
+      if (w && h) {
         width = w;
         height = h;
         fitOptions = FitOptions.FILL_PROPORTIONALLY;
-      } else if (arguments.length === 3) {
-        fitOptions = FitOptions.frameToContent;
       } else {
-        error(imgErrorMsg);
+        fitOptions = FitOptions.frameToContent;
       }
     }
-
-    frame = currentPage().rectangles.add(currentLayer(),
-      {geometricBounds:[y, x, y + height, x + width]}
+    
+    frame = currentPage().rectangles.add(currentLayer(), 
+      { geometricBounds:[y, x, y + height, x + width] }
     );
-  } else {
-    error(imgErrorMsg);
   }
-
+  
   frame.place(file);
 
   if (fitOptions) {
@@ -83,11 +64,11 @@ pub.image = function(img, x, y, w, h) {
     frame.move(null, [-(width / 2), -(height / 2)]);
     frame.transform(CoordinateSpaces.PASTEBOARD_COORDINATES,
                        AnchorPoint.CENTER_ANCHOR,
-                       currMatrix.adobeMatrix());
+                       currMatrix.adobeMatrix() );
   } else {
     frame.transform(CoordinateSpaces.PASTEBOARD_COORDINATES,
                    AnchorPoint.TOP_LEFT_ANCHOR,
-                   currMatrix.adobeMatrix());
+                   currMatrix.adobeMatrix() );
   }
 
   with (frame) {
@@ -114,13 +95,13 @@ pub.image = function(img, x, y, w, h) {
  */
 pub.transformImage = function(img, x, y, width, height) {
   if (img.hasOwnProperty("geometricBounds") && img.hasOwnProperty("fit")) {
-    // [y1, x1, y2, x2]
-    img.geometricBounds = [y, x, y + height, x + width];
+    //[y1, x1, y2, x2]
+    img.geometricBounds = [y,x,y+height,x+width];
     if (currImageMode === pub.CENTER) {
       img.move(null, [-(width / 2), -(height / 2)]);
     }
-    img.fit(FitOptions.CENTER_CONTENT);
-    img.fit(FitOptions.contentToFrame);
+    img.fit( FitOptions.CENTER_CONTENT );
+    img.fit( FitOptions.contentToFrame );
   } else {
     error("b.transformImage(), wrong type! Use: img, x, y, width, height");
   }
@@ -139,7 +120,7 @@ pub.transformImage = function(img, x, y, width, height) {
 pub.imageMode = function(mode) {
   if (arguments.length === 0) return currImageMode;
 
-  if (mode === pub.CORNER || mode === pub.CORNERS || mode === pub.CENTER) {
+  if (mode === pub.CORNER || mode === pub.CORNERS || mode === pub.CENTER ) {
     currImageMode = mode;
   } else {
     error("b.imageMode(), unsupported imageMode. Use: CORNER, CORNERS, CENTER.");
