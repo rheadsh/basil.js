@@ -2,7 +2,7 @@
 // ----------------------------------------
 // Math
 
-var Vector = pub.Vector = function() {
+var Vector = pub.Vector = function () {
 
   /**
    * A class to describe a two or three dimensional vector. This datatype stores two or three variables that are commonly used as a position, velocity, and/or acceleration. Technically, position is a point and velocity and acceleration are vectors, but this is often simplified to consider all three as vectors. For example, if you consider a rectangle moving across the screen, at any given instant it has a position (the object's location, expressed as a point.), a velocity (the rate at which the object's position changes per time unit, expressed as a vector), and acceleration (the rate at which the object's velocity changes per time unit, expressed as a vector). Since vectors represent groupings of values, we cannot simply use traditional addition/multiplication/etc. Instead, we'll need to do some "vector" math, which is made easy by the methods inside the Vector class.
@@ -33,7 +33,7 @@ var Vector = pub.Vector = function() {
    * @param {Vector} v2 The second vector
    * @return {Number} The distance
    */
-  Vector.dist = function(v1, v2) {
+  Vector.dist = function (v1, v2) {
     return v1.dist(v2);
   };
 
@@ -48,7 +48,7 @@ var Vector = pub.Vector = function() {
    * @param {Vector} v2 The second vector
    * @return {Number} The dot product
    */
-  Vector.dot = function(v1, v2) {
+  Vector.dot = function (v1, v2) {
     return v1.dot(v2);
   };
 
@@ -63,7 +63,7 @@ var Vector = pub.Vector = function() {
    * @param {Vector} v2 The second vector
    * @return {Number} The cross product
    */
-  Vector.cross = function(v1, v2) {
+  Vector.cross = function (v1, v2) {
     return v1.cross(v2);
   };
 
@@ -78,7 +78,7 @@ var Vector = pub.Vector = function() {
    * @param {Vector} v2 The second vector
    * @return {Number} The angle
    */
-  Vector.angleBetween = function(v1, v2) {
+  Vector.angleBetween = function (v1, v2) {
     return Math.acos(v1.dot(v2) / (v1.mag() * v2.mag()));
   };
 
@@ -93,7 +93,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [y] The y component
      * @param {Number} [z] The z component
      */
-    set: function(v, y, z) {
+    set: function (v, y, z) {
       if (arguments.length === 1) this.set(v.x || v[0] || 0, v.y || v[1] || 0, v.z || v[2] || 0);
       else {
         this.x = v;
@@ -108,7 +108,7 @@ var Vector = pub.Vector = function() {
      * @subcat Vector
      * @return {Vector} A copy of the vector
      */
-    get: function() {
+    get: function () {
       return new Vector(this.x, this.y, this.z);
     },
     /**
@@ -118,7 +118,7 @@ var Vector = pub.Vector = function() {
      * @subcat Vector
      * @return {Number} The length
      */
-    mag: function() {
+    mag: function () {
       var x = this.x,
         y = this.y,
         z = this.z;
@@ -133,7 +133,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [y] The y component
      * @param {Number} [z] The z component
      */
-    add: function(v, y, z) {
+    add: function (v, y, z) {
       if (arguments.length === 1) {
         this.x += v.x;
         this.y += v.y;
@@ -153,7 +153,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [y] The y component
      * @param {Number} [z] The z component
      */
-    sub: function(v, y, z) {
+    sub: function (v, y, z) {
       if (arguments.length === 1) {
         this.x -= v.x;
         this.y -= v.y;
@@ -173,7 +173,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [y] The y component
      * @param {Number} [z] The z component
      */
-    mult: function(v) {
+    mult: function (v) {
       if (typeof v === "number") {
         this.x *= v;
         this.y *= v;
@@ -193,7 +193,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [y] The y component
      * @param {Number} [z] The z component
      */
-    div: function(v) {
+    div: function (v) {
       if (typeof v === "number") {
         this.x /= v;
         this.y /= v;
@@ -214,7 +214,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [z] The z component
      * @return {Number} The distance
      */
-    dist: function(v) {
+    dist: function (v) {
       var dx = this.x - v.x,
         dy = this.y - v.y,
         dz = this.z - v.z;
@@ -230,7 +230,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [z] The z component
      * @return {Number} The dot product
      */
-    dot: function(v, y, z) {
+    dot: function (v, y, z) {
       if (arguments.length === 1) return this.x * v.x + this.y * v.y + this.z * v.z;
       return this.x * v + this.y * y + this.z * z;
     },
@@ -244,7 +244,7 @@ var Vector = pub.Vector = function() {
      * @param {Number} [z] The z component
      * @return {Number} The cross product
      */
-    cross: function(v) {
+    cross: function (v) {
       var x = this.x,
         y = this.y,
         z = this.z;
@@ -256,7 +256,7 @@ var Vector = pub.Vector = function() {
      * @subcat Vector
      * @method Vector.normalize
      */
-    normalize: function() {
+    normalize: function () {
       var m = this.mag();
       if (m > 0) this.div(m);
     },
@@ -267,7 +267,7 @@ var Vector = pub.Vector = function() {
      * @subcat Vector
      * @param {Number} high The value to scale to.
      */
-    limit: function(high) {
+    limit: function (high) {
       if (this.mag() > high) {
         this.normalize();
         this.mult(high);
@@ -280,7 +280,7 @@ var Vector = pub.Vector = function() {
      * @subcat Vector
      * @return {Number} A radian angle value
      */
-    heading: function() {
+    heading: function () {
       return -Math.atan2(-this.y, this.x);
     },
     /**
@@ -290,7 +290,7 @@ var Vector = pub.Vector = function() {
      * @subcat Vector
      * @return {String} The x, y and z components as a string.
      */
-    toString: function() {
+    toString: function () {
       return "[" + this.x + ", " + this.y + ", " + this.z + "]";
     },
     /** 
@@ -300,13 +300,13 @@ var Vector = pub.Vector = function() {
      * @subcat Vector
      * @return {Array} [x,y,z]
      */
-    array: function() {
+    array: function () {
       return [this.x, this.y, this.z];
     }
   };
 
   function createVectorMethod(method) {
-    return function(v1, v2) {
+    return function (v1, v2) {
       var v = v1.get();
       v[method](v2);
       return v;
@@ -318,7 +318,7 @@ var Vector = pub.Vector = function() {
 
 
 // -- Calculation --  
- 
+
 /** 
  * Calculates the absolute value (magnitude) of a number. The absolute value of a number is always positive.
  *
@@ -352,10 +352,10 @@ pub.ceil = Math.ceil;
  * @param {Number} aMax maximum limit
  * @return The constrained value
  */
-pub.constrain = function(aNumber, aMin, aMax) {
-  if(arguments.length !== 3 ) error("b.constrain(), wrong argument count.");
-  if(aNumber <= aMin) return aMin;
-  if(aNumber >= aMax) return aMax;
+pub.constrain = function (aNumber, aMin, aMax) {
+  if (arguments.length !== 3) error("b.constrain(), wrong argument count.");
+  if (aNumber <= aMin) return aMin;
+  if (aNumber >= aMax) return aMax;
   return aNumber;
 };
 
@@ -371,7 +371,7 @@ pub.constrain = function(aNumber, aMin, aMax) {
  * @param {Number} y2 the y-coordinate of the second point
  * @return {Number} The distance
  */
-pub.dist = function() {
+pub.dist = function () {
   var dx, dy, dz;
   if (arguments.length === 4) {
     dx = arguments[0] - arguments[2];
@@ -415,8 +415,8 @@ pub.floor = Math.floor;
  * @param {Number} amt between 0.0 and 1.0
  * @return {Number} The mapped value
  */
-pub.lerp = function(value1, value2, amt) {
-  if(arguments.length !== 3 ) error("b.lerp(), wrong argument count.");
+pub.lerp = function (value1, value2, amt) {
+  if (arguments.length !== 3) error("b.lerp(), wrong argument count.");
   return (value2 - value1) * amt + value1;
 };
 
@@ -442,8 +442,8 @@ pub.log = Math.log;
  * @param {Number} [c] z-coordinate
  * @return {Number} the magnitude
  */
-pub.mag = function(a, b, c) {
-  if( ! (arguments.length === 2 || arguments.length === 3 ) )  error("b.mag(), wrong argument count.");
+pub.mag = function (a, b, c) {
+  if (!(arguments.length === 2 || arguments.length === 3)) error("b.mag(), wrong argument count.");
   if (c) return Math.sqrt(a * a + b * b + c * c);
   return Math.sqrt(a * a + b * b);
 };
@@ -463,8 +463,8 @@ pub.mag = function(a, b, c) {
  * @param {Number} ostop end of the output range
  * @return {Number} the mapped value
  */
-pub.map = function(value, istart, istop, ostart, ostop) {
-  if(arguments.length !== 5 ) error("b.map(), wrong argument count. Use: map(value, istart, istop, ostart, ostop)");
+pub.map = function (value, istart, istop, ostart, ostop) {
+  if (arguments.length !== 5) error("b.map(), wrong argument count. Use: map(value, istart, istop, ostart, ostop)");
   return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 };
 
@@ -478,11 +478,11 @@ pub.map = function(value, istart, istop, ostart, ostop) {
  * @param {Number} param2 Another value to be compared
  * @param {Number} param3 Another value to be compared
  * @return {Number} The highest value
- */ 
-pub.max = function() {
+ */
+pub.max = function () {
   if (arguments.length === 2) return arguments[0] < arguments[1] ? arguments[1] : arguments[0];
   var numbers = arguments.length === 1 ? arguments[0] : arguments;
-  if (! ("length" in numbers && numbers.length > 0)) error("b.max(), non-empty array is expected");
+  if (!("length" in numbers && numbers.length > 0)) error("b.max(), non-empty array is expected");
   var max = numbers[0],
     count = numbers.length;
   for (var i = 1; i < count; ++i) if (max < numbers[i]) max = numbers[i];
@@ -499,11 +499,11 @@ pub.max = function() {
  * @param {Number} param2 Another value to be compared
  * @param {Number} param3 Another value to be compared
  * @return {Number} The lowest value
- */ 
-pub.min = function() {
+ */
+pub.min = function () {
   if (arguments.length === 2) return arguments[0] < arguments[1] ? arguments[0] : arguments[1];
   var numbers = arguments.length === 1 ? arguments[0] : arguments;
-  if (! ("length" in numbers && numbers.length > 0)) error("b.min(), non-empty array is expected");
+  if (!("length" in numbers && numbers.length > 0)) error("b.min(), non-empty array is expected");
   var min = numbers[0],
     count = numbers.length;
   for (var i = 1; i < count; ++i) if (min > numbers[i]) min = numbers[i];
@@ -525,8 +525,8 @@ pub.min = function() {
  * @param {Number} low The highest value to be expected
  * @return {Number} The normalized value
  */
-pub.norm = function(aNumber, low, high) {
-  if(arguments.length !== 3 ) error("b.norm, wrong argument count.");
+pub.norm = function (aNumber, low, high) {
+  if (arguments.length !== 3) error("b.norm, wrong argument count.");
   return (aNumber - low) / (high - low);
 };
 
@@ -562,8 +562,8 @@ pub.round = Math.round;
  * @param {Number} aNumber The value to be squared
  * @return {Number} 
  */
-pub.sq = function(aNumber) {
-  if(arguments.length !== 1 ) error("b.sq(), wrong argument count.");
+pub.sq = function (aNumber) {
+  if (arguments.length !== 1) error("b.sq(), wrong argument count.");
   return aNumber * aNumber;
 };
 
@@ -599,7 +599,7 @@ pub.acos = Math.acos;
  * @method asin
  * @param {Number} value the value whose arc sine is to be returned
  * @return {Number} 
- */  
+ */
 pub.asin = Math.asin;
 
 /**
@@ -645,7 +645,7 @@ pub.cos = Math.cos;
  * @param {Number} aAngle an angle in radians
  * @return {Number} The given angle in degree
  */
-pub.degrees = function(aAngle) {
+pub.degrees = function (aAngle) {
   return aAngle * 180 / Math.PI;
 };
 
@@ -658,7 +658,7 @@ pub.degrees = function(aAngle) {
  * @param {Number} aAngle an angle in degree
  * @return {Number} The given angle in radians
  */
-pub.radians = function(aAngle) {
+pub.radians = function (aAngle) {
   return aAngle / 180 * Math.PI;
 };
 
@@ -685,357 +685,4 @@ pub.sin = Math.sin;
 pub.tan = Math.tan;
 
 // -- Random --
-
-var currentRandom = Math.random;
-
-/**
- * Generates random numbers. Each time the random() function is called, it returns an unexpected value within the specified range. If one parameter is passed to the function it will return a float between zero and the value of the high parameter. The function call random(5) returns values between 0 and 5. If two parameters are passed, it will return a float with a value between the the parameters. The function call random(-5, 10.2) returns values between -5 and 10.2.
- * 
- * One parameter sets the range from 0 to the given parameter, while with two parameters present you set the range from val1 - val2.
- *
- * @cat Math
- * @subcat Random
- * @method random
- * @param {Number} [low] The low border of the range
- * @param {Number} [high] The high border of the range
- * @return {Number} A random number
- */
-pub.random = function() {
-  if (arguments.length === 0) return currentRandom();
-  if (arguments.length === 1) return currentRandom() * arguments[0];
-  var aMin = arguments[0],
-    aMax = arguments[1];
-  return currentRandom() * (aMax - aMin) + aMin;
-};
-
-function Marsaglia(i1, i2) {
-  var z = i1 || 362436069,
-    w = i2 || 521288629;
-  var nextInt = function() {
-    z = 36969 * (z & 65535) + (z >>> 16) & 4294967295;
-    w = 18E3 * (w & 65535) + (w >>> 16) & 4294967295;
-    return ((z & 65535) << 16 | w & 65535) & 4294967295;
-  };
-  this.nextDouble = function() {
-    var i = nextInt() / 4294967296;
-    return i < 0 ? 1 + i : i;
-  };
-  this.nextInt = nextInt;
-}
-Marsaglia.createRandomized = function() {
-  var now = new Date();
-  return new Marsaglia(now / 6E4 & 4294967295, now & 4294967295);
-};
-/* todo */
-pub.randomSeed = function(seed) {
-  currentRandom = (new Marsaglia(seed)).nextDouble;
-};
-/* todo */
-pub.Random = function(seed) {
-  var haveNextNextGaussian = false,
-    nextNextGaussian, random;
-  this.nextGaussian = function() {
-    if (haveNextNextGaussian) {
-      haveNextNextGaussian = false;
-      return nextNextGaussian;
-    }
-    var v1, v2, s;
-    do {
-      v1 = 2 * random() - 1;
-      v2 = 2 * random() - 1;
-      s = v1 * v1 + v2 * v2;
-    } while (s >= 1 || s === 0);
-    var multiplier = Math.sqrt(-2 * Math.log(s) / s);
-    nextNextGaussian = v2 * multiplier;
-    haveNextNextGaussian = true;
-    return v1 * multiplier;
-  };
-  random = seed === undef ? Math.random : (new Marsaglia(seed)).nextDouble;
-};
-
-/* todo */
-function PerlinNoise(seed) {
-  var rnd = seed !== undef ? new Marsaglia(seed) : Marsaglia.createRandomized();
-  var i, j;
-  var perm = [] ;
-  for (i = 0; i < 256; ++i) perm[i] = i;
-  for (i = 0; i < 256; ++i) {
-    var t = perm[j = rnd.nextInt() & 255];
-    perm[j] = perm[i];
-    perm[i] = t;
-  }
-  for (i = 0; i < 256; ++i) perm[i + 256] = perm[i];
-  
-  function grad3d(i, x, y, z) {
-    var h = i & 15;
-    var u = h < 8 ? x : y,
-    v = h < 4 ? y : h === 12 || h === 14 ? x : z;
-    return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
-  }
-  
-  function grad2d(i, x, y) {
-    var v = (i & 1) === 0 ? x : y;
-    return (i & 2) === 0 ? -v : v;
-  }
-  
-  function grad1d(i, x) {
-    return (i & 1) === 0 ? -x : x;
-  }
-  function lerp(t, a, b) {
-    return a + t * (b - a);
-  }
-  
-  this.noise3d = function(x, y, z) {
-    var X = Math.floor(x) & 255,
-      Y = Math.floor(y) & 255,
-      Z = Math.floor(z) & 255;
-    x -= Math.floor(x);
-    y -= Math.floor(y);
-    z -= Math.floor(z);
-    var fx = (3 - 2 * x) * x * x,
-      fy = (3 - 2 * y) * y * y,
-      fz = (3 - 2 * z) * z * z;
-    var p0 = perm[X] + Y,
-      p00 = perm[p0] + Z,
-      p01 = perm[p0 + 1] + Z,
-      p1 = perm[X + 1] + Y,
-      p10 = perm[p1] + Z,
-      p11 = perm[p1 + 1] + Z;
-    return lerp(fz, lerp(fy, lerp(fx, grad3d(perm[p00], x, y, z), grad3d(perm[p10], x - 1, y, z)), lerp(fx, grad3d(perm[p01], x, y - 1, z), grad3d(perm[p11], x - 1, y - 1, z))), lerp(fy, lerp(fx, grad3d(perm[p00 + 1], x, y, z - 1), grad3d(perm[p10 + 1], x - 1, y, z - 1)), lerp(fx, grad3d(perm[p01 + 1], x, y - 1, z - 1), grad3d(perm[p11 + 1], x - 1, y - 1, z - 1))));
-  };
-  
-  this.noise2d = function(x, y) {
-    var X = Math.floor(x) & 255,
-      Y = Math.floor(y) & 255;
-    x -= Math.floor(x);
-    y -= Math.floor(y);
-    var fx = (3 - 2 * x) * x * x,
-      fy = (3 - 2 * y) * y * y;
-    var p0 = perm[X] + Y,
-      p1 = perm[X + 1] + Y;
-    return lerp(fy, lerp(fx, grad2d(perm[p0], x, y), grad2d(perm[p1], x - 1, y)), lerp(fx, grad2d(perm[p0 + 1], x, y - 1), grad2d(perm[p1 + 1], x - 1, y - 1)));
-  };
-  
-  this.noise1d = function(x) {
-    var X = Math.floor(x) & 255;
-    x -= Math.floor(x);
-    var fx = (3 - 2 * x) * x * x;
-    return lerp(fx, grad1d(perm[X], x), grad1d(perm[X + 1], x - 1));
-  };
-}
-var noiseProfile = {
-  generator: undef,
-  octaves: 4,
-  fallout: 0.5,
-  seed: undef
-};
-
-/**
- * Returns the Perlin noise value at specified coordinates. Perlin noise is a random sequence generator producing a more natural ordered, harmonic succession of numbers compared to the standard random() function. It was invented by Ken Perlin in the 1980s and been used since in graphical applications to produce procedural textures, natural motion, shapes, terrains etc.
- *
- * The main difference to the random() function is that Perlin noise is defined in an infinite n-dimensional space where each pair of coordinates corresponds to a fixed semi-random value (fixed only for the lifespan of the program). The resulting value will always be between 0.0 and 1.0. basil.js can compute 1D, 2D and 3D noise, depending on the number of coordinates given. The noise value can be animated by moving through the noise space. The 2nd and 3rd dimension can also be interpreted as time.
- *
- * The actual noise is structured similar to an audio signal, in respect to the function's use of frequencies. Similar to the concept of harmonics in physics, perlin noise is computed over several octaves which are added together for the final result. 
- *
- * Another way to adjust the character of the resulting sequence is the scale of the input coordinates. As the function works within an infinite space the value of the coordinates doesn't matter as such, only the distance between successive coordinates does (eg. when using noise() within a loop). As a general rule the smaller the difference between coordinates, the smoother the resulting noise sequence will be. Steps of 0.005-0.03 work best for most applications, but this will differ depending on use.
- *
- * @cat Math
- * @subcat Random
- * @method noise
- * @param {Number} x Coordinate in x space
- * @param {Number} [y] Coordinate in y space
- * @param {Number} [z] Coordinate in z space
- * @return {Number} the noise value
- */
-pub.noise = function(x, y, z) {
-  if (noiseProfile.generator === undef) noiseProfile.generator = new PerlinNoise(noiseProfile.seed);
-  var generator = noiseProfile.generator;
-  var effect = 1,
-    k = 1,
-    sum = 0;
-  for (var i = 0; i < noiseProfile.octaves; ++i) {
-    effect *= noiseProfile.fallout;
-    switch (arguments.length) {
-    case 1:
-      sum += effect * (1 + generator.noise1d(k * x)) / 2;
-      break;
-    case 2:
-      sum += effect * (1 + generator.noise2d(k * x, k * y)) / 2;
-      break;
-    case 3:
-      sum += effect * (1 + generator.noise3d(k * x, k * y, k * z)) / 2;
-      break;
-    }
-    k *= 2;
-  }
-  return sum;
-};
-
-/**
- * Adjusts the character and level of detail produced by the Perlin noise function. Similar to harmonics in physics, noise is computed over several octaves. Lower octaves contribute more to the output signal and as such define the overal intensity of the noise, whereas higher octaves create finer grained details in the noise sequence. By default, noise is computed over 4 octaves with each octave contributing exactly half than its predecessor, starting at 50% strength for the 1st octave. This falloff amount can be changed by adding an additional function parameter. Eg. a falloff factor of 0.75 means each octave will now have 75% impact (25% less) of the previous lower octave. Any value between 0.0 and 1.0 is valid, however note that values greater than 0.5 might result in greater than 1.0 values returned by noise().
- *
- * By changing these parameters, the signal created by the noise() function can be adapted to fit very specific needs and characteristics.
- * 
- * @cat Math
- * @subcat Random
- * @method noiseDetail
- * @param {Number} octaves number of octaves to be used by the noise() function
- * @param {Number} fallout falloff factor for each octave
- */
-pub.noiseDetail = function(octaves, fallout) {
-  noiseProfile.octaves = octaves;
-  if (fallout !== undef) noiseProfile.fallout = fallout;
-};
-
-/** 
- * Sets the seed value for noise(). By default, noise() produces different results each time the program is run. Set the value parameter to a constant to return the same pseudo-random numbers each time the software is run.
- * 
- * @cat Math
- * @subcat Random
- * @method noiseSeed
- * @param {Number} seed 
- */
-pub.noiseSeed = function(seed) {
-  noiseProfile.seed = seed;
-  noiseProfile.generator = undef;
-};
-
-
-
-// ----------------------------------------
-// Transform
-// geometricBounds hint: [y1, x1, y2, x2]
-
-var precision = function(num, dec) {
-  return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
-};
-
-/**
- * The function calculates the geometric bounds of any given object. Use b.itemX(), b.itemY(), b.itemPosition(), b.itemWidth(), b.itemHeight() and b.itemSize() to modify PageItems.
- * In case the object is any kind of text, then additional typographic information baseline and xHeight are calculated
- *
- * @cat Document
- * @subcat Transformation
- * @method bounds
- * @param  {Text|Object} obj The object to calculate the geometric bounds
- * @return {Object} Geometric bounds object with these properties: width, height, left, right, top, bottom and for text: baseline, xHeight
- */
-pub.bounds = function (obj) {
-  var x1,y1,x2,y2,w,h;
-
-  if (isText(obj)) {
-    var baseline = obj.baseline;
-    var ascent = obj.ascent;
-    var descent = obj.descent;
-
-    x1 = obj.horizontalOffset;
-    y1 = baseline - ascent;
-    x2 = obj.endHorizontalOffset;
-    y2 = baseline + descent;
-    w = x2-x1;
-    h = y2-y1;
-
-    if (w < 0 || h <0) {
-      warning("b.bounds(), not possible to get correct bounds, possible line break within textObj");
-    }
-
-    // TODO: not sure if this 100% correct, check
-    // http://en.wikipedia.org/wiki/File:Typography_Line_Terms.svg
-    var xHeight = y1+descent;
-
-    return {'width':w,
-            'height':h,
-            'left':x1,
-            'right':x2,
-            'top':y1,
-            'bottom':y2,
-            'baseline':baseline,
-            'xHeight':xHeight };
-  } else {
-    // is it a pageItem?
-    if (obj.hasOwnProperty("geometricBounds")) {
-      var geometricBounds = obj.geometricBounds; //[y1, x1, y2, x2]
-      x1 = geometricBounds[1];
-      y1 = geometricBounds[0];
-      x2 = geometricBounds[3];
-      y2 = geometricBounds[2];
-      w = x2-x1;
-      h = y2-y1;
-      return {'width':w, 'height':h, 'left':x1, 'right':x2, 'top':y1, 'bottom':y2};
-    }
-    // everything else e.g. page, spread
-    else if (obj.hasOwnProperty("bounds")) {
-      var bounds = obj.bounds; //[y1, x1, y2, x2]
-      x1 = bounds[1];
-      y1 = bounds[0];
-      x2 = bounds[3];
-      y2 = bounds[2];
-      w = x2-x1;
-      h = y2-y1;
-      return {'width':w, 'height':h, 'left':x1, 'right':x2, 'top':y1, 'bottom':y2};
-    }
-    // no idea what that might be, give up
-    else {
-      error("b.bounds(), invalide type of parameter! Can't get bounds for this object.");
-    }
-  }
-};  
-
-/**
- * Positions a PageItem at the designated spot on the x axis. If no x argument is given the current x position is returned.
- * 
- * @cat Document
- * @subcat Transformation
- * @method itemX
- * @param {PageItem} pItem The PageItem to alter
- * @param {Number} [x] The new x position
- * @returns {Number} The current x position
- */
-pub.itemX = function(pItem, x) {
-  var off = 0;
-  if(currRectMode !== b.CORNER) pub.warning("b.itemX(), please note that only b.CORNER positioning is fully supported. Use with care.");
-  if( typeof pItem !== 'undef' && pItem.hasOwnProperty("geometricBounds")) {
-    if( typeof x === 'number' ){
-      var width = pItem.geometricBounds[3] - pItem.geometricBounds[1];
-      var height = pItem.geometricBounds[2] - pItem.geometricBounds[0];
-//        if(currRectMode === b.CENTER) off = ( pItem.geometricBounds[2] - pItem.geometricBounds[0] ) / 2;
-      pItem.geometricBounds = [ pItem.geometricBounds[0] - off, x - off, pItem.geometricBounds[0] + height - off, x - off + width ];
-    } else {
-//        if(currRectMode === b.CENTER) off = ( pItem.geometricBounds[3] - pItem.geometricBounds[1] ) / 2;
-      return precision(pItem.geometricBounds[1], 5) + off; // CS6 sets geometricBounds to initially slightly off values... terrible workaround
-    }
-  } else {
-    error("b.itemX(), pItem has to be a valid PageItem");
-  }
-};
-
-/**
- * Positions a PageItem at the designated spot on the y axis. If no y argument is given the current y position is returned.
- *
- * @cat Document
- * @subcat Transformation
- * @method itemY
- * @param {PageItem} pItem The PageItem to alter
- * @param {Number} [y] The new y position
- * @returns {Number} The current y position
- */
-pub.itemY = function(pItem, y) {
-  var off = 0;
-  if(currRectMode !== b.CORNER) pub.warning("b.itemY(), please note that only b.CORNER positioning is fully supported. Use with care.");
-  if( typeof pItem !== 'undef' && pItem.hasOwnProperty("geometricBounds")) {
-    if( typeof y === 'number' ) {
-      var width = pItem.geometricBounds[3] - pItem.geometricBounds[1];
-      var height = pItem.geometricBounds[2] - pItem.geometricBounds[0];
-//        if(currRectMode === b.CENTER) off = ( pItem.geometricBounds[3] - pItem.geometricBounds[1] ) / 2;
-      b.itemPosition(pItem, pItem.geometricBounds[1] - off, y);
-      pItem.geometricBounds = [ y, pItem.geometricBounds[1] - off, y + height, pItem.geometricBounds[1] + width - off ];
-    } else {
-//        if(currRectMode === b.CENTER) off = ( pItem.geometricBounds[2] - pItem.geometricBounds[0] ) / 2;
-      return precision(pItem.geometricBounds[0], 5) + off;
-    }
-  } else {
-    error("b.itemY(), pItem has to be a valid PageItem");
-  }
-};
-
-
+// P5 implementations for Random and Noise are used. See math_random_noise.js

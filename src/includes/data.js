@@ -718,7 +718,9 @@ var initDataFile = function(file, mustExist) {
   if (file instanceof File) {
     result = file;
   } else {
-    var folder = new Folder(projectFolder().absoluteURI + '/data');
+    //var folder = new Folder(projectFolder().absoluteURI + '/data');
+    //Adapt function for After Effects
+    var folder = new Folder(projectFolder() + '/data');
     folder.create(); // creates data folder if not existing, otherwise it just skips
     result = new File(folder.absoluteURI + '/' + file);
   }
@@ -775,7 +777,9 @@ var initExportFile = function(file, mustExist) {
 var projectFolder = pub.projectFolder = function() {
   var docPath = null;
   try {
-    docPath = currentDoc().filePath;
+    // docPath = currentDoc().filePath;
+    //Adapt function for After Effects
+    docPath = app.project.file.path;
   } catch (e) {
     error("The current document must be saved before its project directory can be accessed.");
   }
@@ -880,8 +884,6 @@ pub.loadStrings = function(file) {
  */
 var println = pub.println = function(msg) {
   $.writeln(msg);
-  if (progressPanel)
-    progressPanel.writeMessage(msg + "\n");
 };
 
 /**
@@ -893,8 +895,6 @@ var println = pub.println = function(msg) {
  */
 pub.print = function(msg) {
   $.write(msg);
-  if (progressPanel)
-    progressPanel.writeMessage(msg);
 };
 
 /**
@@ -947,35 +947,6 @@ pub.saveString = function(file, string) {
   outputFile.open('w');
   outputFile.write(string);
   outputFile.close();
-};
-
-// TODO: make savePDF and savePNG D.R.Y.
-/**
- * Exports the current document as PDF to the documents folder. Please note, that export options default to the last used export settings.
- *
- * @cat Output
- * @method savePDF
- * @param {String|File} file The file name or a File instance
- * @param {Boolean} [showOptions] Whether to show the export dialog
- */
-pub.savePDF = function(file, showOptions){
-  var outputFile = initExportFile(file);
-  if (typeof showOptions !== "boolean") showOptions = false;
-  currentDoc().exportFile(ExportFormat.PDF_TYPE, outputFile, showOptions);
-};
-
-/**
- * Exports the current document as PNG (or sequence of PNG files) to the documents folder. Please note, that export options default to the last used export settings.
- *
- * @cat Output
- * @method savePNG
- * @param {String|File} file The file name or a File instance
- * @param {Boolean} [showOptions] Whether to show the export dialog
- */
-pub.savePNG = function(file, showOptions){
-  var outputFile = initExportFile(file);
-  if (typeof showOptions !== "boolean") showOptions = false;
-  currentDoc().exportFile(ExportFormat.PNG_FORMAT, outputFile, showOptions);
 };
 
 /**

@@ -54,7 +54,7 @@ if (!Array.prototype.map) {
 }
 
 /**
-* Used to run a function on all elements of an array. Please note the existance of the convenience methods b.stories(), b.paragraphs(), b.lines(), b.words() and b.characters() that are used to iterate through all instances of the given type in the given document.
+* Used to run a function on all elements of an array.
 *
 * @cat Data
 * @subcat Array Functions

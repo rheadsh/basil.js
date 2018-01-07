@@ -1,33 +1,41 @@
 // ----------------------------------------
 // private vars
-var currDoc = null,
-    currPage = null,
-    currLayer = null,
-    currUnits = null,
-    currMatrix = null,
-    matrixStack = null,
-    currColorMode = null,
+var thisComp = null,
+    //3D Mode
+    curr3DMode = null,
+    
+    //Fill
+    currFillState = null,
     currFillColor = null,
-    currStrokeColor = null,
-    currStrokeTint = null,
-    currFillTint = null,
+    
+    //Stroke
+    currStrokeState = null,
     currStrokeWeight = null,
+    currStrokeColor = null,
+    
+    //Opacity
+    currOpacity = null,
+    
+    //Shape
     currRectMode = null,
     currEllipseMode = null,
-    noneSwatchColor = null,
-    startTime = null,
+    currLineMode = null,
+    currSolidMode = null,
+    currShapeMode = null,
+
+    //Font
     currFont = null,
     currFontSize = null,
-    currAlign = null,
-    currYAlign = null,
-    currLeading = null,
-    currKerning = null,
-    currTracking = null,
-    currImageMode = null,
-    currCanvasMode = null,
-    currVertexPoints = null,
-    currPathPointer = null,  
-    currPolygon = null,    
-    currShapeMode = null,
-    // tmp cache, see addToStroy(), via indesign external library file
-    addToStoryCache = null;
+    currJustification = null,
+    currTextMode = null,
+
+    //Blend
+    currBlendMode = null,
+
+
+    
+    currMatrix = null,
+    matrixStack = null,
+    currColorMode = null;
+    
+    

@@ -38,9 +38,18 @@
 */
 
 /*
-    After Effects Expansion by
-    Roberto Cabezas H.
-    bbetoo@gmail.com
+    B A F F E C T S . J S
+    Baffects.js (Basil for After Effects) is built on top of the Basil.js library to bring the spirit of the Processing visualization language to Adobe After Effects.
+    
+    License        - MIT
+
+    Core
+                  - Roberto Cabezas H http://instagram.com/rheadsh bbetoo@gmail.com
+    
+
+    random() and noise() functions were adapted from p5.js code.
+
+    Currently debugging on Mac OSX 10.12.6 and AfterEffects CC 2018
 */
 
 #target "AfterEffects";
@@ -60,6 +69,13 @@
    */
   pub.VERSION = "1.0.10";
 
+  /**
+   * The baffects version
+   * @property VERSION {String}
+   * @cat Environment
+   */
+  pub.VERSION_BAFFECTS = "0.1";
+
   #include "includes/public-vars.js";
   #include "includes/private-vars.js";
   #include "includes/global-functions.js";
@@ -67,21 +83,24 @@
   #include "includes/core.js";
 
   #include "includes/structure.js";
-  #include "includes/environment.js";
   #include "includes/data.js";
-  #include "includes/shape.js";
-  #include "includes/color.js";
-  #include "includes/typography.js";
-  #include "includes/image.js";
   #include "includes/math.js";
+  #include "includes/math_random_noise.js";
   #include "includes/transformation.js";
-  #include "includes/ui.js";
+  #include "includes/environment.js"
 
-  //AfterEffects additions to the library
-  #include "includes/after-effects-expansion.js";
-  #include "includes/after-effects-constants.js";
+  //AfterEffects implementations
   #include "includes/after-effects-utilities.js";
+  #include "includes/after-effects-environment.js";
+  #include "includes/after-effects-constants.js";
   #include "includes/after-effects-data.js";
+  #include "includes/after-effects-color.js";
+  #include "includes/after-effects-text.js";
+  #include "includes/after-effects-keyframes.js";
+  #include "includes/after-effects-masks.js";
+  #include "includes/after-effects-shapes.js";
+  #include "includes/after-effects-lightsandcam.js"
+
   init();
 
 })(this, app);
